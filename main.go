@@ -41,7 +41,7 @@ func main() {
 		// Pagination logic
 		page := 1
 		fmt.Sscanf(r.URL.Query().Get("page"), "%d", &page)
-		data := paginate(transactions, page, 15)
+		data := paginate(transactions, page, 10)
 		data.ActiveFilter = filterType
 
 		// Define HTML template

@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <title>Crypto Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 p-10">
+<body class="bg-gray-800 p-10">
     <div class="max-w-5xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
         <div class="px-6 py-4 bg-blue-600 text-white font-bold text-xl">
             Bitvavo - Transactions
         </div>
-        <div class="mb-6 flex gap-2">
-            <a href="/?type=all" class="px-4 py-2 bg-gray-200 rounded">Alle</a>
-            <a href="/?type=buy" class="px-4 py-2 bg-green-200 rounded">Käufe</a>
-            <a href="/?type=staking" class="px-4 py-2 bg-blue-200 rounded">Staking</a>
-            <a href="/?type=deposit" class="px-4 py-2 bg-yellow-200 rounded">Einzahlungen</a>
+
+        <div class="float-right m-4 flex gap-2">
+            <a href="/" class="px-4 py-2 bg-gray-200 text-gray-900 font-semibold uppercase rounded">All</a>
+            <a href="/?type=buy" class="px-4 py-2 bg-green-200 text-green-900 font-semibold uppercase rounded">Buy</a>
+            <a href="/?type=staking" class="px-4 py-2 bg-blue-200 text-blue-900 font-semibold uppercase rounded">Staking</a>
+            <a href="/?type=deposit" class="px-4 py-2 bg-yellow-200 text-yellow-900 font-semibold uppercase rounded">Deposit</a>
+            <a href="/?type=sell" class="px-4 py-2 bg-red-200 text-red-900 font-semibold uppercase rounded">Sell</a>
         </div>
         <table class="min-w-full leading-normal">
             <thead>
@@ -35,23 +37,23 @@
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{.Currency}}</td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{.Date}}</td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <span class="relative inline-block px-3 py-1 font-semibold leading-tight 
-                            {{if eq .Type "buy"}}text-green-900{{else}}text-blue-900{{end}}">
-                            <span class="absolute inset-0 {{if eq .Type "buy"}}bg-green-200{{else}}bg-blue-200{{end}} opacity-50 rounded-full"></span>
+                        <span class="relative inline-block px-3 py-1 font-semibold leading-tight uppercase
+                            {{if eq .Type "buy"}}text-green-900{{else if eq .Type "sell"}}text-red-900{{else if eq .Type "deposit"}}text-yellow-900{{else}}text-blue-900{{end}}">
+                            <span class="absolute inset-0 {{if eq .Type "buy"}}bg-green-200{{else if eq .Type "sell"}}bg-red-200{{else if eq .Type "deposit"}}bg-yellow-200{{else}}bg-blue-200{{end}} opacity-50 rounded-full"></span>
                             <span class="relative">{{.Type}}</span>
                         </span>
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{.Amount}}</td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">{{if .Price}}{{.Price}}{{else}}-{{end}}</td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-gray-500 italic">{{.Fee}}</td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-gray-500 italic">{{.Paid}}</td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-gray-500 italic">{{if .Fee}}{{.Fee}}{{else}}-{{end}}</td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-gray-500 italic">{{if .Paid}}{{.Paid}}{{else}}-{{end}}</td>
                 </tr>
                 {{end}}
             </tbody>
         </table>
         <div class="flex justify-center space-x-2 mt-6 pb-10">
             {{if gt .CurrentPage 1}}
-                <a href="/?page={{.PrevPage}}&type={{.ActiveFilter}}" class="px-4 py-2 bg-blue-500 text-white rounded">Zurück</a>
+                <a href="/?page={{.PrevPage}}{{if .ActiveFilter}}&type={{.ActiveFilter}}{{end}}" class="px-4 py-2 bg-blue-500 text-white rounded">Zurück</a>
             {{else}}
                 <span class="px-4 py-2 bg-gray-300 text-white rounded cursor-not-allowed">Zurück</span>
             {{end}}
@@ -59,7 +61,7 @@
             <span class="px-4 py-2 font-bold">Seite {{.CurrentPage}} von {{.TotalPages}}</span>
 
             {{if lt .CurrentPage .TotalPages}}
-                <a href="/?page={{.NextPage}}&type={{.ActiveFilter}}" class="px-4 py-2 bg-blue-500 text-white rounded">Weiter</a>
+                <a href="/?page={{.NextPage}}{{if .ActiveFilter}}&type={{.ActiveFilter}}{{end}}" class="px-4 py-2 bg-blue-500 text-white rounded">Weiter</a>
             {{else}}
                 <span class="px-4 py-2 bg-gray-300 text-white rounded cursor-not-allowed">Weiter</span>
             {{end}}
