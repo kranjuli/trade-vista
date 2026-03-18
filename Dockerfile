@@ -6,7 +6,7 @@ WORKDIR /app
 # Dependencies first for docker cache
 COPY go.mod ./
 
-RUN go mode download
+RUN go mod download
 
 # copy rest of code
 COPY . .
