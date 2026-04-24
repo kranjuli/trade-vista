@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    commit:
+      message: "Update GitHub Actions workflow"
+      prefix: "chore"
+      prefix-development: "chore"
+      include-scope: "dev"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "docker"
+    directory: "/"
+    commit:
+      message: "Update Dockerfile"
+      prefix: "chore"
+    schedule:
+      interval: "weekly"
